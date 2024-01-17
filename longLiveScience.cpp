@@ -1,8 +1,11 @@
-//1. Try to find an equation to resolve this problem in o(1)
-//2. Compound interest can resolve this
-//3. Dont't work because the problem require the numbers being
-//   truncate every multiplication
-//4. Create a loop to made this
+/*
+
+==========  LENILDO LUAN CARLOS  ==========
+========== LENILDOLUAN@GMAIL.COM ==========
+
+Question: https://www.beecrowd.com.br/judge/en/problems/view/3157
+
+*/
 
 #include <stdio.h>
 #include <iostream> 
