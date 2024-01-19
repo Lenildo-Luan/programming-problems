@@ -1,8 +1,23 @@
-// Progress
+/*
+
+==========  LENILDO LUAN CARLOS  ==========
+========== LENILDOLUAN@GMAIL.COM ==========
+
+Question: https://www.beecrowd.com.br/judge/en/runs/code/37286827
+
+Process:
+
+1. Trying a recursive approach
+2. Recursive approach is slow, change to iterative
+
+Obs: variable names is from the question
+
+*/
 
 #include <stdio.h>
 #include <iostream>
 #include <cstdarg>
+#include <vector>
 
 using namespace std;
 
@@ -34,24 +49,11 @@ void getData(const char* format...) {
  
     va_end(args);
 }
-z'  
-int push(int f, int s, int g, int u, int d, int pushes) {
-    
-    if(u == 0 || d == 0) return -1;
-        
-    if(s == g){
-        return pushes;
-    } else if((s + u) - g < g - (s - d) && s + u <= f) {
-        pushes++;
-        s += u;
-        return push(f, s, g, u, d, pushes);
-    } else if(s - d >= 1) {
-        pushes++;
-        s -= d;
-        return push(f, s, g, u, d, pushes);
-    }
-    
-    return -1;
+
+int calcDistAfterPush(int s, int p, int g) {
+    int distance = g - (s + p);
+    if(distance < 0) distance *= -1;
+    return distance;
 }
 
 int main() {
@@ -59,10 +61,28 @@ int main() {
     int f, s, g, u, d;
     
     getData("ddddd", &f, &s, &g, &u, &d);
-    pushes = push(f, s, g, u, d, pushes);
+    
+    vector<bool> floorIsPushed(f, false);
+    
+    while(1) {
+        if(s == g){
+            break;
+        } else if (floorIsPushed[s-1]) {
+            pushes = -1;
+            break;
+        } else if(calcDistAfterPush(s, u, g) < calcDistAfterPush(s, -d, g) && s + u <= f) {
+            pushes++;
+            floorIsPushed[s-1] = true;
+            s += u;
+        } else if(s - d >= 1) {
+            pushes++;
+            floorIsPushed[s-1] = true;
+            s -= d;
+        }
+    }    
     
     if(pushes == -1) cout << "use the stairs" << endl;
-    else cout << pushes;
+    else cout << pushes << endl;
     
     return 0;
 }
